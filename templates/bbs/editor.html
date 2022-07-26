@@ -1,0 +1,129 @@
+<head>
+    <script type="text/javascript"src="/statics/plugins/ace-builds-master/src/ace.js"></script>
+    <script type="text/javascript" src="/statics/plugins/ace-builds-master/src/ext-language_tools.js"></script>
+</head>
+{% extends "base.html" %}
+{% load custom %}
+{% csrf_token %}
+{#实现动态菜单#}
+{% block tag-menu %}
+{% for category in category_list %}
+{% if category.id == category_obj.id %}
+<li class="active"><a
+        href="/bbs/category/{{ category.id }}/">{{ category.name }}</a></li>
+{% else %}
+<li class=""><a
+        href="/bbs/category/{{ category.id }}/">{{ category.name }}</a></li>
+{% endif %}
+{% endfor %}
+{% endblock %}
+
+{#主页右上角显示用户名或者登录#}
+{% block login_register %}
+{% if request.user.is_authenticated %}
+<li class=""><a href="#">{{ request.user.userprofile.name }}</a></li>
+<li class=""><a href="{% url 'logout' %}">注销</a></li>
+{% else %}
+<li class=""><a href="{% url 'login' %}">登录/注册</a></li>
+{% endif %}
+<li class=""><a href="{% url 'new_article' %}">发帖</a></li>
+{% endblock %}
+
+{% block page-container %}
+<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>
+
+<div class="wrap-left">
+{#    <textarea id="editor" data-provide="markdown" rows="20" cols="50"></textarea>#}
+<pre id="code" class="ace_editor" style="min-height:400px"><textarea class="ace_text-input code"></textarea></pre>
+</div>
+
+{#    右侧栏页面#}
+<div class="wrap-right">
+
+    <div class="code-language-choice" style="padding-left: 10vh;">
+        <select class="form-select" aria-label="Default select example" style="height: 7vh; width: 10vh; border-radius: 8px">
+            <option selected>Language</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+        </select>
+         <input type="submit" class="btn btn-success pull-right submit-code" value="调试" style="margin-top: 15px">
+    </div>
+    <br>
+    <div style="padding-left: 10vh;">
+        <form class="bs-example bs-example-form" role="form">
+            <div class="input-group">
+                <span >输入</span>
+                <textarea style="width: 40vh; height: 15vh;" class="input-area"></textarea>
+            </div>
+            <br>
+            <div class="input-group">
+                <span>输出</span>
+                <pre style="width: 40vh; height: 15vh" class="output-area"></pre>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+<div class="clear-both">
+
+</div>
+{% endblock %}
+
+{% block bottom-js %}
+<script>
+//初始化对象
+    editor = ace.edit("code");
+
+    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    theme = "clouds"
+    language = "c_cpp"
+    editor.setTheme("ace/theme/" + theme);
+    editor.session.setMode("ace/mode/" + language);
+
+    //字体大小
+    editor.setFontSize(18);
+
+    //设置只读（true时只读，用于展示代码）
+    editor.setReadOnly(false);
+
+    //自动换行,设置为off关闭
+    editor.setOption("wrap", "free")
+
+    //启用提示菜单
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+    });
+    let submit = $('.submit-code');
+
+    submit.click(function () {
+        let language = $('.form-select').val();
+        let input = $('.input-area').val();
+        //let code = document.getElementsByClassName('ace_text-input');
+        let code = editor.getValue();
+        let output = $('.output-area');
+        console.log(code)
+        if (language === "Language") alert("请选择编程语言！");
+        else {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/compiler/',
+                type: "POST",
+                data: {
+                    language: language,
+                    input: input,
+                    code: code
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    // if (resp.state === 'Success')
+                        output.html(resp.output)
+                }
+            })
+        }
+    });
+</script>
+{% endblock %}

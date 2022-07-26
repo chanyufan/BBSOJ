@@ -1,0 +1,65 @@
+{#{% extends "base.html" %}#}
+
+{##}
+{#登录#}
+{#{% block page-container %}#}
+
+<head>
+<meta charset="UTF-8">
+<title>Sign Up Login</title>
+<link rel="stylesheet" href="/statics/bootstrap/css/style.css">
+    <script src="/statics/bootstrap/js/index.js"></script>
+    <script type="text/javascript" src="/statics/bootstrap/js/jquery.min.js.下载" ></script>
+</head>
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
+<body>
+{% csrf_token %}
+<div class="cotn_principal">
+  <div class="cont_centrar">
+    <div class="cont_login">
+      <div class="cont_info_log_sign_up">
+        <div class="col_md_login">
+          <div class="cont_ba_opcitiy">
+            <h2>LOGIN</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur.</p>
+            <button class="btn_login" onClick="cambiar_login()">LOGIN</button>
+          </div>
+        </div>
+        <div class="col_md_sign_up">
+          <div class="cont_ba_opcitiy">
+            <h2>SIGN UP</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur.</p>
+            <button class="btn_sign_up" onClick="cambiar_sign_up()">SIGN UP</button>
+          </div>
+        </div>
+      </div>
+      <div class="cont_back_info">
+        <div class="cont_img_back_grey"> <img src="/media/po.jpg" alt="" /> </div>
+      </div>
+      <div class="cont_forms" >
+        <div class="cont_img_back_"> <img src="po.jpg" alt="" /> </div>
+        <div class="cont_form_login"> <a href="#" onClick="ocultar_login_sign_up()" ><i class="material-icons">&#xE5C4;</i></a>
+          <h2>LOGIN</h2>
+          <input class="user" type="    text" placeholder="Email" />
+          <input class="pwd" type="password" placeholder="Password" />
+              <button class="btn_login" onClick="cambiar_login()">LOGIN</button>
+        </div>
+        <div class="cont_form_sign_up"> <a href="#" onClick="ocultar_login_sign_up()"><i class="material-icons">&#xE5C4;</i></a>
+          <h2>SIGN UP</h2>
+          <input type="text" class="register_user" placeholder="User" />
+          <input type="password" class="register_pwd" placeholder="Password" />
+          <input type="password" class="confirm_pwd" placeholder="Confirm Password" />
+          <input type="text" class="register_email" placeholder="Email" />
+          <button class="btn_sign_up" onClick="cambiar_sign_up()">SIGN UP</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{#{% endblock %}#}
+

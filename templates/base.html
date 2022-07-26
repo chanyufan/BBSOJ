@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://v3.bootcss.com/examples/navbar-fixed-top/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://v3.bootcss.com/favicon.ico">
+
+    <title>OJ论坛</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/statics/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
+    <!-- Custom styles for this template -->
+    <link href="/statics/bootstrap/css/navbar-fixed-top.css" rel="stylesheet">
+    {#引入自己写的样式#}
+    <link href="/statics/bootstrap/css/custom.css" rel="stylesheet">
+    <link href="/statics/plugins/bootstrap-markdown-master/css/bootstrap-markdown.min.css" rel="stylesheet">
+</head>
+
+<body>
+{% csrf_token %}
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/bbs/">OJ论坛</a>
+            <a class="navbar-brand" href="/editor/">编辑器</a>
+            <a class="navbar-brand" href="/problem_set/">题库</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                {% block tag-menu %}
+                {% endblock %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                    {% block login_register %}
+                {% endblock %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="page-container">
+    {% block page-container %}
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h2>BASE模板文件</h2>
+    </div>
+    {% endblock %}
+</div> <!-- /container -->
+{#<footer class="footer">#}
+{#    <div class="footer-font">#}
+{#        <h1>Solost23出品</h1>#}
+{#    </div>#}
+{#</footer>#}
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/statics/bootstrap/js/jquery.min.js.下载"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/statics/bootstrap/js/bootstrap.min.js"></script>
+<script src="/statics/plugins/bootstrap-markdown-master/js/bootstrap-markdown.js"></script>
+{#<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>#}
+{#<script src="/statics/bootstrap/js/marked.js"></script>#}
+{% block bottom-js %}
+
+{% endblock %}
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+    <div class="xl-chrome-ext-bar__logo"></div>
+
+    <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+    <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+</div>
+</body>
+</html>

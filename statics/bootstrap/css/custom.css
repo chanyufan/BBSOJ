@@ -1,0 +1,187 @@
+/*for bbs*/
+
+.page-container {
+    // border: 1px dashed darkcyan;
+    padding-left: 200px;
+    padding-right: 200px;
+}
+
+.wrap-left {
+    width: 75%;
+    float: left;
+
+    /*background-color: darkorange;*/
+}
+
+.wrap-right {
+    width: 25%;
+    float: left;
+
+    /*background-color: blueviolet;*/
+}
+
+.clear-both {
+    clear: both;
+}
+
+.article-head-img img {
+    width: 220px;
+    height: 125px;
+}
+
+.footer {
+    width: 100%;
+    height: 200px;
+    margin-top: 50px;
+    position: relative;
+    background: blue;
+}
+
+.article-box.row {
+    margin-top: 20px;
+    // padding-bottom: 20px;
+}
+
+.article-brief {
+    margin-top: 15px;
+    margin-left: -15px;
+}
+
+.article-title {
+    font-size: 20px;
+
+}
+
+a {
+    color: #333333;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+a:hover {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+body {
+    /*color: #333;*/
+    font-family: Arial, "微软雅黑", "Microsoft yahei", "Hiragino Sans GB", "冬青黑体简体中文 w3", "Microsoft Yahei";
+}
+
+.article-brief-text {
+    margin-top: 10px;
+    color: #999;
+}
+
+.article-title-bg {
+    font-size: 30px;
+}
+
+.article-title-brief {
+    margin-top: 10px;
+    color: #999;
+}
+
+.article-detail-head-img {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.article-content {
+    line-height: 30px;
+}
+
+.footer-font {
+    width: 20%;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -3%;
+    margin-left: -6.5%;
+    /*background-color: black;*/
+}
+
+.comment-node {
+    margin-top: 15px;
+    border: 1px solid darkcyan;
+    padding: 5px;
+}
+
+.root-comment {
+    margin-top: 20px;
+    border: 1px solid darkcyan;
+    padding: 5px;
+}
+
+.new-article-notify {
+    background-color: brown;
+    padding: 10px;
+
+}
+
+/*for webchat*/
+.chat-container {
+    width: 100%;
+    border: 1px dashed darkcyan;
+}
+
+.left-contact-panel {
+    width: 280px;
+    height: 100%;
+    /*border: 2px solid blueviolet;*/
+    float: left;
+}
+
+.right-chat-panel {
+    width: 935px;
+    height: 100%;
+    /*border: 2px solid greenyellow;*/
+    float: left;
+}
+
+.problem_set_item1 {
+
+    //width: 20%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.problem_set_item2 {
+
+    //width: 60%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.problem_set_title {
+    font-style: oblique;
+    color: #28a4c9;
+}
+
+.problem_title_item {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.problem_item {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.problem_text {
+    margin-bottom: 5px;
+}
+/*将footer固定在底部*/
+
+
+
+
+
+
+

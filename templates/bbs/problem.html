@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% load custom %}
+{#实现动态菜单#}
+
+
+{% block tag-menu %}
+{% for category in category_list %}
+{% if category.id == category_obj.id %}
+<li class="active"><a
+        href="/bbs/category/{{ category.id }}/">{{ category.name }}</a></li>
+{% else %}
+<li class=""><a
+        href="/bbs/category/{{ category.id }}/">{{ category.name }}</a></li>
+{% endif %}
+{% endfor %}
+{% endblock %}
+
+{#主页右上角显示用户名或者登录#}
+{% block login_register %}
+{% if request.user.is_authenticated %}
+<li class=""><a href="#">{{ request.user.userprofile.name }}</a></li>
+<li class=""><a href="{% url 'logout' %}">注销</a></li>
+{% else %}
+<li class=""><a href="{% url 'login' %}">登录/注册</a></li>
+{% endif %}
+<li class=""><a href="{% url 'new_article' %}">发帖</a></li>
+{% endblock %}
+
+{#主页显示文章列表#}
+{% block page-container %}
+<script type="text/javascript" src="/statics/plugins/ace-builds-master/src/ace.js"></script>
+<script type="text/javascript" src="/statics/plugins/ace-builds-master/src/ext-language_tools.js"></script>
+{#    左侧栏页面显示文章列表#}
+<div class="wrap-left">
+    <div class="problem_title_item">
+        {{ problem_obj.problem_title }}
+    </div>
+    <div class="problem-title-brief">
+        <div class="problem_item">题目描述 </div>
+        <br>
+            <div class="problem_text">{{ problem_obj.problem_description }} </div>
+        <br>
+        <div class="problem_item">输入格式 </div>
+        <br>
+            <div class="problem_text">{{ problem_obj.input_style }}</div>
+        <br>
+        <div class="problem_item">输出格式 </div>
+        <br>
+            <div class="problem_text">{{ problem_obj.output_style }}</div>
+        <br>
+        <div class="problem_item">数据范围 </div>
+        <br>
+            <div class="problem_text">{{ problem_obj.data_range }}</div>
+        <br>
+        <div class="problem_item">样例输入 </div>
+        <br>
+            <pre class="problem_text">{{ problem_obj.input_sample }}</pre>
+        <br>
+        <div class="problem_item">样例输出 </div>
+        <br>
+            <pre class="problem_text">{{ problem_obj.output_sample }}</pre>
+        <br>
+    </div>
+    <div class="code-language-choice">
+        <select class="form-select" aria-label="Default select example" style="height: 7vh; width: 15vh; border-radius: 8px">
+            <option selected>Language</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="C++">C++</option>
+        </select>
+        <input type="submit" class="btn btn-success pull-right submit-code" value="提交" style="margin-top: 15px; margin-right: 5px">
+        <input type="submit" class="btn btn-info pull-right debug-code" value="调试" style="margin-top: 15px; margin-right: 5px">
+        <div style="margin-top: 15px">
+            <div class="problem_commit_info">
+                <span style="font-size: 15px">代码提交状态</span>
+                <div class="code_commit_status"></div>
+                <div class="time"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <br>
+
+    <div class="editor">
+{#        <textarea id="editor" data-provide="markdown" rows="20" cols="50"></textarea>#}
+        <pre id="code" class="ace_editor" style="min-height:400px"><textarea class="ace_text-input"></textarea></pre>
+    </div>
+
+    <br>
+    <div>
+        <form class="bs-example bs-example-form" role="form">
+            <div >
+                <div class="problem_item">输入</div>
+                <textarea class="input-area" style="width: 100%; border-radius: 4px; font-size: 15px"> </textarea>
+            </div>
+            <br>
+            <div >
+                <div class="problem_item">输出</div>
+                <pre class="output-area">  </pre>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{#    右侧栏页面#}
+<div class="wrap-right">
+    <div>
+        <div class="problem_item">题目难度</div>
+        <br>
+        <div style="color: #4cae4c">{{ problem_obj.problem_degree }}</div>
+    </div>
+    <br>
+    <div>
+        <div class="problem_item">时空限制</div>
+        <br>
+        <div class="">{{ problem_obj.time_space_limit }}</div>
+    </div>
+
+</div>
+
+<div class="clear-both">
+
+</div>
+{% endblock %}
+
+{% block bottom-js %}
+{#<script src="/statics/bootstrap/js/marked.js"></script>#}
+{#<script type="text/javascript" src='https://cdn.jsdelivr.net/npm/marked/marked.min.js'></script>#}
+<script>
+    //初始化对象
+    editor = ace.edit("code");
+
+    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+    theme = "clouds"
+    language = "c_cpp"
+    editor.setTheme("ace/theme/" + theme);
+    editor.session.setMode("ace/mode/" + language);
+
+    //字体大小
+    editor.setFontSize(18);
+
+    //设置只读（true时只读，用于展示代码）
+    editor.setReadOnly(false);
+
+    //自动换行,设置为off关闭
+    editor.setOption("wrap", "free")
+
+    //启用提示菜单
+    ace.require("ace/ext/language_tools");
+    editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true
+    });
+
+    let debug = $('.debug-code');
+
+    debug.click(function () {
+
+
+
+        let language = $('.form-select').val();
+        let input = $('.input-area').val();
+        let code = editor.getValue();
+        let time = $('.time');
+        let status = $('.code_commit_status');
+        status.html('')
+        time.html('')
+
+        console.log(code)
+        let output = $('.output-area');
+        if (language === "Language") alert("请选择编程语言！");
+        else {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/compiler/',
+                type: "POST",
+                data: {
+                    language: language,
+                    input: input,
+                    code: code
+                },
+                success: function (resp) {
+                    // console.log(resp);
+                    if (resp.state === 'Success') {
+                        output.html(resp.output)
+                        time.html(resp.time)
+                    }
+                }
+            })
+        }
+    });
+
+    let submit = $('.submit-code');
+
+    submit.click(function () {
+        let language = $('.form-select').val();
+        let problem_number = {{ problem_obj.problem_number }} ;
+        let status = $('.code_commit_status');
+        let code = editor.getValue();
+        let time = $('.time');
+        let input = $('.input-area');
+        let output = $('.output-area');
+
+        if (language === "Language") alert("请选择编程语言！");
+        else {
+            status.html("Pending...");
+            $.ajax({
+                url: 'http://127.0.0.1:8000/bbs/judge/',
+                type: "POST",
+                data: {
+                    language: language,
+                    problem_number: problem_number,
+                    code: code
+                },
+                success: function (resp) {
+                    console.log(resp);
+                    {#if (resp.state === 'Success')#}
+                    status.html(resp.status)
+                    time.html(resp.time + 'ms')
+                    {#input.hide()#}
+                    {#output.hide()#}
+                    output.val('')
+                    {#input.val('')#}
+                }
+            })
+        }
+    });
+
+</script>
+{% endblock %}
